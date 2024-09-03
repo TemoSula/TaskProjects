@@ -10,36 +10,6 @@ public class Main {
 
     public static void main(String[] args) {
 
-        //let's write code here
-        /*
-       Დაწერეთ Command-line აპლიკაცია. Აპლიკაციის გაშვების შემდეგ იუზერს უნდა შეეძლოს ბრძანების მითითება. Კონკრეტულს ბრძანებს უნდა ქონდეს თავისი ფუნქციონალი.
-
-Აპლიკაციას უნდა ქონდეს 5 ბრძანება:
-Tasks.Task-ის შენახვა
-Tasks.Task-ების წამოღება
-Კონკრეტული Tasks.Task -ის განახლება
-Კონრეტული ტასკის წაშლა.
-Კონკრეტული ტასკის წამოღება
-
-Აპლიკაციის გაშვების შემდეგ მომხმარებელმა უნდა შეიყვანოს username რითაც ემუშავება ჩვენს სისტემას.
-	Tasks.Task -ს გააჩნია სამი ფილდი: სახელი(რომელიც არის უნიკალური, აპლიკაციაში არ უნდა შეგვეძლოს გვქონდეს ორი ტასკი ერთნაირი სახელით), Tasks.Task -ის განმარტება, შემქმნელი იუზერის სახელი.
-
-Შექმნის ბრძანების არჩევის შემდეგ იუზერმა უნდა შეიყვანოს თითოეული ფილდი(გარდა შემქმნეული იუზერის სახელისა..
-
-Უნდა არსებობდეს 3 განსხვავებული ტიპის ტასკი: LimitedTimeTask(დამატებით ექნება დედლაინის თარიღი(გამოიყენეთ LocalDateTime), RepeateableTask(დამტებით ექნება რამდენჯერ უნდა შესრულდეს და როდის) და BasicTask(რომელსაც არ ექნება დამატებითი ფილდები.
-
-1.Tasks.Task -ის შენახვა:
-	Შენახვისას იუზერმა უნდა გადმოგვცეს ტასკის ტიპის სახელი რომლის მიხედვითაც შევაყვანინებთ ტასკის ტიპის მიხედვით განსხვავებულ ფილდებს
-2.Tasks.Task - ების წამოღება:
-	Ამ ბრძანების გამოძახების შემდეგ იუზერს უნდა დაუბრუნდეს ყველა ტასკის სახელი.
-3.კონკრეტული ტასკის განახლება:
- 	Ბრძანების არჩევის შემდეგ უნდა მიუთითოს იუზერმა ტასკის სახელი და მან უნდა შეძლოს ტასკის განმარტების და დედლაინის შეცვლა და ა.შ. Ტასკის არარსებობის შემთხვევაში უნდა დავუბრუნოთ მესიჯი: ტასკი არ არსებობს.
-4. Კონკრეტული ტასკის წაშლა:
-	Ბრძანების მითითების შემდეგ იუზერი ირჩევს ტასკის სახელს, რომლის წაშლაც უნდა. Ტასკის არ არსებობის შემთხვევაშ ვუბრუნებით მესიჯს: ტასკი არ არსებობს.
-5. Კონკრეტულის ტასკის წამოღება:
-	Კომანდის არჩევის შემდეგ უთითებს ტასკის ტიპს , ტასკის სახელს, რომელზეც დაუბრუნდება დეტალური ინფორმაცია( განმარტება,დედლაინი, შემქმნელი იუზერის სახელი და ა.შ)
-
-*/
 
             Scanner scanner = new Scanner(System.in);
 
@@ -101,10 +71,21 @@ Tasks.Task-ების წამოღება
             switch (type) {
                 case "LimitedTimeTask":
                     System.out.print("Enter deadline (yyyy-MM-dd HH:mm): ");
-                    String deadlineStr = scanner.nextLine();
-                    LocalDateTime deadline = LocalDateTime.parse(deadlineStr, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
-                    task = new LimitedTimeTask(name, description, currentUser, deadline);
-                    break;
+
+                   //this is fixed
+
+                    try {
+                        String deadlineStr = scanner.nextLine();
+                        LocalDateTime deadline = LocalDateTime.parse(deadlineStr, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+                        task = new LimitedTimeTask(name, description, currentUser, deadline);
+                        break;
+                    }
+                    catch (Exception e)
+                    {
+                        System.out.println("arasworia mititeba");
+                        return;
+                    }
+
                 case "RepeatableTask":
                     System.out.print("Enter repeat count: ");
                     int repeatCount = Integer.parseInt(scanner.nextLine());
@@ -121,7 +102,7 @@ Tasks.Task-ების წამოღება
             }
 
             tasks.put(name, task);
-            System.out.println("Tasks.Task added successfully.");
+            System.out.println("Tasks added successfully.");
         }
 
         private static void listTasks () {
@@ -142,12 +123,12 @@ Tasks.Task-ების წამოღება
 
             Task task = tasks.get(name);
             if (task == null) {
-                System.out.println("Tasks.Task does not exist.");
+                System.out.println("Tasks does not exist.");
                 return;
             }
 
             task.update(scanner);
-            System.out.println("Tasks.Task updated successfully.");
+            System.out.println("Tasks updated successfully.");
         }
 
         private static void deleteTask (Scanner scanner){
